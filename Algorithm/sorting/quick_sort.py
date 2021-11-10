@@ -1,11 +1,12 @@
 import sys
 
-def quick_sort(arr):
+def quick_sort(arr, start, end):
+    
     pass
 
 arr = [1, 4, 3, 5, 2]
 
-quick_sort(arr)
+quick_sort(arr, 0, len(arr))
 
 print(arr)
 
