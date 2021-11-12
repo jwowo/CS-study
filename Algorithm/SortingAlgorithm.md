@@ -14,6 +14,16 @@ n개의 원소를 가지고 있는 배열을 오름차순 정렬을 구현한다
 
 이를 n-1번 반복하여 정렬을 완료한다.
 
+```python
+def bubble_sort(arr):
+    n = len(arr)
+
+    for i in range(n-1):
+        for j in range(n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+```
+
 | 시간 복잡도 | 공간 복잡도 |
 | :---------: | :---------- |
 |   O(N^2)    | O(N)        |
