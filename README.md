@@ -1,1 +1,1 @@
-# CS-study
+# :computer: CS-study
