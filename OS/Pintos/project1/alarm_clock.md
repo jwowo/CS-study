@@ -375,6 +375,10 @@ Priority-scheduling에서 cond_wait 함수 관련 질문 드립니다. 구현을
 #### A6
 해당 자료가 pintos-kaist에서 공식으로 제공하는 자료는 아니라서, 저희도 제대로 본 적이 없기 때문에 자료에서의 구현 방식에 대해 정확한 말씀을 드리긴 어렵습니다. 다만 말씀하신 대로 cond_signal에서 어차피 sorting을 한다면, 굳이 cond_wait에서까지 중복으로 sorting할 필요는 없어 보입니다.
 
+### 참고
+1. https://casys-kaist.github.io/pintos-kaist/project1/introduction.html
+2. https://poalim.tistory.com/28?category=758538
+3. https://firecatlibrary.tistory.com/56?category=875424
 
 ### + 가상 메모리 참고 블로그
 https://gamedevlog.tistory.com/85
