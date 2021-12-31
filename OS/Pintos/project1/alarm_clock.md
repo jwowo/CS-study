@@ -83,7 +83,7 @@ list_entry는 구조체 멤버변수의 주소를 알고 있을 때 멤버변수
 
 ### 구현 
 
-[x] thread descripter 필드 추가
+- [x] thread descripter 필드 추가
   - thread 구조체에 해당 thread가 일어나야 할 tick을 저장할 필드 (wake_up_tick)
 ```c
 threads/thread.h 
@@ -106,7 +106,7 @@ struct thread {
 
 ```
 
-[x] 전역 변수 추가
+- [x] 전역 변수 추가
 - `sleep queue` 자료구조 추가
 ```c
 threads/thread.h
@@ -122,7 +122,7 @@ threads/thread.h
 int64_t get_next_tick_to_awake(void);
 ```
 
-[x] `thread_init()` 함수 수정
+- [x] `thread_init()` 함수 수정
 - main() 함수에서 호출되는 thread 관련 초기화 함수
 - sleep queue 자료구조 초기화 코드 추가
 ```c
@@ -156,7 +156,7 @@ thread_init (void) {
 ```
 
 
-[x] `timer_sleep()` 함수 수정
+- [x] `timer_sleep()` 함수 수정
 - 기존의 busy waiting을 유발하는 코드 삭제 (thread가 자는 시간동안 CPU는 while문을 반복하며 cpu의 제어권을 넘기)
 - sleep queue를 이용하여 함수 수정
   - 구현하게 될 함수인 thread_sleep()함수 사용
@@ -181,7 +181,7 @@ timer_sleep (int64_t ticks) {
 }
 ```
 
-[x] `thread_sleep()` 함수 구현
+- [x] `thread_sleep()` 함수 구현
 - 재워야할 thread를 sleep queue에 삽입하고 blocked 상태로 만들어 대기
 - 해당 과정중에는 인터럽트를 받아들이지 않는다
 - next_tick_to_awake보다 현재 thread를 재울 시간이 더 작다면 업데이트 한다
@@ -209,7 +209,7 @@ thread_sleep(int64_t ticks){
 }
 ```
 
-[x] `timer_interrupt()` 함수 수정
+- [x] `timer_interrupt()` 함수 수정
 - 매 tick마다 timer 인터럽트 시 호출되는 함수
 - sleep queue에서 깨어날 thread가 있는지 확인 (get_next_tick_to_awake())
   - sleep queue에서 가장 빨리 깨어날 thread의 tick값 확인 (next)
@@ -232,7 +232,7 @@ timer_interrupt (struct intr_frame *args UNUSED) {
 }
 ```
 
-[x] `thread_awake()` 함수 구현
+- [x] `thread_awake()` 함수 구현
 - wakeup_tick 값이 인자로 받은 ticks 보다 크거나 같은 thread 깨움
 - 현재 대기중인 thread들의 wakeup_tick 변수 중 가장 작은 값을 next_tick_to_awake 전역 변수에 저장
 ```c
@@ -265,7 +265,7 @@ void thread_awake(int64_t ticks){
 }
 ```
 
-[x] `get_next_tick_to_awake()` 함수 추가
+- [x] `get_next_tick_to_awake()` 함수 추가
 - thread.c 이외의 파일 (device/timer.c 등)에서도 next_tick_to_awake 변수를 참조하는데 용이하게 하기 위해 추가 
 ```c
 threads/thread.c
@@ -370,7 +370,6 @@ process_fork() 역시 마찬가지로 확인됩니다.
 Priority-scheduling에서 cond_wait 함수 관련 질문 드립니다. 구현을 위해 참고하고 있는 자료에서 cond_wait을 수정할 때 priority의 순서를 지키면서 thread를 waiters에 넣으라는 가이드를 보았습니다.
 우선 기존의 cond_wait 함수를 보면 list_push_back(&cond->waiter, &waiter.elem) 와 같이 우선순위를 무시하고 queue의 뒤에 삽입해주고 있습니다(https://github.com/casys-kaist/pintos-kaist/blob/master/threads/synch.c#L285). 만약 우선순위를 적용하게 된다면 list_insert_ordered 함수 같은 것을 사용하게 될 것입니다. 그런데 문제는, 우선순위를 확인하기 위해서는 thread의 priority 정보가 필요한데, sema_down 함수가 작동하기 전까지는 waiter.semaphore의 waiters에 현재 running 중인 thread의 정보가 들어가지 않는다는 점입니다. thread의 정보가 없는 상태에서 어떻게 list_insert_ordered가 작동할 수 있도록 구현할 수 있는지 궁금합니다.
 보다 근본적으로, 어짜피 cond_signal 에서 sorting을 할건데 굳이 cond_wait에서 우선순위를 지켜가며 O(n) 시간 복잡도를 소모하는 방식을 사용할 이유가 무엇인지 의문입니다.
-매번 감사드립니다!
 
 #### A6
 해당 자료가 pintos-kaist에서 공식으로 제공하는 자료는 아니라서, 저희도 제대로 본 적이 없기 때문에 자료에서의 구현 방식에 대해 정확한 말씀을 드리긴 어렵습니다. 다만 말씀하신 대로 cond_signal에서 어차피 sorting을 한다면, 굳이 cond_wait에서까지 중복으로 sorting할 필요는 없어 보입니다.
